@@ -1,0 +1,7 @@
+{
+  "name": "API.AI Wikipedia webhook",
+  "description": "API.AI Wikipedia api webhook based on weather example",
+  "repository": "https://github.com/niasafaa/apiai-wikipedia-webhook",
+  "logo": "http://xvir.github.io/img/apiai.png",
+  "keywords": ["api.ai", "natural language"]
+}
