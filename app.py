@@ -53,8 +53,6 @@ def search(req):
     return search_term
 
 def get_answer(title):
-    if req.get("result").get("action") != "WikipediaSearch":
-        return {}
     baseurl = "https://en.wikipedia.org/w/api.php?"
     action = "action=query&format=json&prop=extracts&list=&titles="
     wiki_rules = "f&redirects=1&exintro=1&explaintext=1"
