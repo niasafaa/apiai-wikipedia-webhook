@@ -45,10 +45,9 @@ def search(req):
     yql_query = makeYqlQuery(req)
     if yql_query is None:
         return {}
-    yql_url = baseurl + action + urlencode({'q': yql_query}) + wiki_rules
+    yql_url = baseurl + action + urlencode(yql_query) + wiki_rules
     result = urlopen(yql_url).read().decode("utf8")
-    #data = json.loads(result)
-    #res = makeWebhookResult(data)
+
     search_term = get_title(result)
     return search_term
 
@@ -61,7 +60,7 @@ def get_answer(title):
     yql_query = makeYqlQuery(title)
     if yql_query is None:
         return {}
-    yql_url = baseurl + action + urlencode({'q': yql_query}) + wiki_rules
+    yql_url = baseurl + action + urlencode(yql_query) + wiki_rules
     result = urlopen(yql_url).read().decode("utf8")
     print ("RESULT:\n" + result)
     res = makeWebhookResult(result)
