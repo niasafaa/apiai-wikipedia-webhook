@@ -43,6 +43,7 @@ def search(req):
     action = "action=opensearch&format=json&search="
     wiki_rules = "&namespace=0&limit=1&redirects=resolve&warningsaserror=1"
     yql_query = makeYqlQuery(req)
+    print (yql_query)
     if yql_query is None:
         return {}
     yql_url = baseurl + action + urlencode(yql_query) + wiki_rules
