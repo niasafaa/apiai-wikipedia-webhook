@@ -58,12 +58,13 @@ def get_answer(title):
     baseurl = "https://en.wikipedia.org/w/api.php?"
     action = "action=query&format=json&prop=extracts&list=&titles="
     wiki_rules = "f&redirects=1&exintro=1&explaintext=1"
-    yql_query = makeYqlQuery(req)
+    yql_query = makeYqlQuery(title)
     if yql_query is None:
         return {}
     yql_url = baseurl + action + urlencode({'q': yql_query}) + wiki_rules
     result = urlopen(yql_url).read().decode("utf8")
-    res = makeWebhookResult(data)
+    print ("RESULT:\n" + result)
+    res = makeWebhookResult(result)
     return res
 
 def get_title(data):
