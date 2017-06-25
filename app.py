@@ -46,7 +46,7 @@ def search(req):
     print (yql_query)
     if yql_query is None:
         return {}
-    yql_url = baseurl + action + urlencode(yql_query) + wiki_rules
+    yql_url = baseurl + urlencode({action: yql_query}) + wiki_rules
     print ("yql_url: " + yql_url)
     result = urlopen(yql_url).read().decode("utf8")
 
