@@ -40,13 +40,13 @@ def search(req):
     if req.get("result").get("action") != "WikipediaSearch":
         return {}
     baseurl = "https://en.wikipedia.org/w/api.php?"
-    action = "action=opensearch&format=json&search="
+    #action = "action=opensearch&format=json&search="
     wiki_rules = "&namespace=0&limit=1&redirects=resolve&warningsaserror=1"
     yql_query = makeYqlQuery(req)
     print (yql_query)
     if yql_query is None:
         return {}
-    yql_url = baseurl + urlencode({action: yql_query}) + wiki_rules
+    yql_url = baseurl + urlencode({"action=opensearch&format=json&search=": yql_query}) + wiki_rules
     print ("yql_url: " + yql_url)
     result = urlopen(yql_url).read().decode("utf8")
 
