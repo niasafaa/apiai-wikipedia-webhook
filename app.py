@@ -78,7 +78,7 @@ def makeYqlQuery(req):
     query = result.get("phrase")
     if query is None:
         return None
-
+    print ('QUERY' + query)
     return query
 
 
