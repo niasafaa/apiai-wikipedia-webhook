@@ -42,8 +42,6 @@ def search(req):
     if req.get("result").get("action") != "WikipediaSearch":
         return {}
     baseurl = "https://en.wikipedia.org/w/api.php?"
-    #action = "action=opensearch&format=json&search="
-    #wiki_rules = "&namespace=0&limit=1&redirects=resolve&warningsaserror=1"
     yql_query = makeYqlQuery(req)
     print (yql_query)
     if yql_query is None:
@@ -52,17 +50,12 @@ def search(req):
     wiki_query = {'action':'opensearch', 'format': 'xml',
                   'namespace': '0', 'limit': '1', 'redirects':'resolve', 'warningsaserror':'1', 'utf8': '1'}
     yql_url = baseurl + urlencode(wiki_query) + "&" + query
-    print ("yql_url: " + yql_url)
     result = urlopen(yql_url).read().decode("utf8")
-    print ("result: " + result)
     search_term = get_title(result)
-    print ("search_term = " + search_term)
     return search_term
 
 def get_answer(title):
     baseurl = "https://en.wikipedia.org/w/api.php?"
-    #action = "action=query&format=json&prop=extracts&list=&titles="
-    #wiki_rules = "f&redirects=1&exintro=1&explaintext=1"
 
     query = title.strip().replace(" ", "+")
     wiki_query = {'action':'query', 'format': 'xml', 'prop': 'extracts',
@@ -76,20 +69,13 @@ def get_answer(title):
 
 def get_title(data):
     xmldoc = minidom.parseString(data)
-    print (xmldoc)
     url = xmldoc.getElementsByTagName('Text')[0].childNodes[0].data
-    #url = url_list[0]
-    print (url)
-    #url = re.findall(r'https:(.*?)"', data)
-    print ('URL ' + url)
-    #title = url.rsplit('/', 1)[-1]
     title = url
-    print ('title ' + title)
     return title
 
 def makeYqlQuery(req):
-    result = req.get("result")
-    query = result.get("resolvedQuery")
+    result = req.get("parameters")
+    query = result.get("phrase")
     if query is None:
         return None
 
@@ -99,15 +85,6 @@ def makeYqlQuery(req):
 def makeWebhookResult(data):
     xmldoc = minidom.parseString(data)
     extract = xmldoc.getElementsByTagName('extract')[0].childNodes[0].data
-    # pages_dict = data["query"]["pages"]
-    # if pages_dict is None:
-    #     return {}
-    # page_id = next(iter(pages_dict))
-    # if page_id is None:
-    #     return {}
-    # extract = data["query"]["pages"][page_id]["extract"]
-    # if extract is None:
-    #     return {}
 
     speech = extract
 
