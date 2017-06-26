@@ -74,7 +74,7 @@ def get_answer(title):
     return res
 
 def get_title(data):
-    xmldoc = minidom.parsesString(data)
+    xmldoc = minidom.parseString(data)
     print (xmldoc)
     url_list = xmldoc.getElementsByTagName('url')
     url = url_list[0]
