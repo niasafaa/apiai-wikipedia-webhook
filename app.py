@@ -52,7 +52,7 @@ def search(req):
     yql_url = baseurl + urlencode(wiki_query) + "&" + query
     print ("yql_url: " + yql_url)
     result = urlopen(yql_url).read().decode("utf8")
-
+    print ("result: " + result)
     search_term = get_title(result)
     return search_term
 
@@ -65,6 +65,7 @@ def get_answer(title):
     wiki_query = {'action':'query', 'format': 'json', 'prop': 'extract',
                   'list': '', 'redirects': '1', 'exintro': '1', 'explaintext': '1'}
     yql_url = baseurl + urlencode(wiki_query) + "&" + query
+    print ("ANSWER URL = " + yql_url)
     result = urlopen(yql_url).read().decode("utf8")
     print ("RESULT:\n" + result)
     res = makeWebhookResult(result)
