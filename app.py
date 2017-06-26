@@ -48,14 +48,13 @@ def search(req):
     if yql_query is None:
         return {}
     query = urlencode({'search': yql_query})
-    wiki_query = {'action':'opensearch', 'format': 'json',
+    wiki_query = {'action':'opensearch', 'format': 'xml',
                   'namespace': '0', 'limit': '1', 'redirects':'resolve', 'warningsaserror':'1', 'utf8': '1'}
     yql_url = baseurl + urlencode(wiki_query) + "&" + query
     print ("yql_url: " + yql_url)
     result = urlopen(yql_url).read().decode("utf8")
     print ("result: " + result)
-    data = json.loads(result)
-    search_term = get_title(data)
+    search_term = get_title(result)
     print ("search_term = " + search_term)
     return search_term
 
