@@ -76,12 +76,13 @@ def get_answer(title):
 def get_title(data):
     xmldoc = minidom.parseString(data)
     print (xmldoc)
-    url = xmldoc.getElementsByTagName('Url')[0].childNodes[0].data
+    url = xmldoc.getElementsByTagName('Text')[0].childNodes[0].data
     #url = url_list[0]
     print (url)
     #url = re.findall(r'https:(.*?)"', data)
     print ('URL ' + url)
-    title = url.rsplit('/', 1)[-1]
+    #title = url.rsplit('/', 1)[-1]
+    title = url
     print ('title ' + title)
     return title
 
