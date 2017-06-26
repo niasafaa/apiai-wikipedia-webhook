@@ -6,6 +6,7 @@ install_aliases()
 
 from urllib.parse import urlparse, urlencode
 from urllib.request import urlopen, Request
+import requests
 from xml.dom import minidom
 
 
@@ -68,7 +69,7 @@ def get_answer(title):
                   'list': '', 'redirects': '1', 'exintro': '', 'explaintext': ''}
     yql_url = baseurl + urlencode(wiki_query) + "&titles=" + query
     print ("ANSWER URL = " + yql_url)
-    result = urlopen(yql_url).read().decode("utf8")
+    result = requests.get(yql_url).text
     print ("RESULT:\n" + result)
     res = makeWebhookResult(result)
     return res
