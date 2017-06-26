@@ -74,8 +74,9 @@ def get_title(data):
     return title
 
 def makeYqlQuery(req):
-    result = req.get("parameters")
-    query = result.get("phrase")
+    result = req.get("result")
+    parameters = result.get("parameters")
+    query = parameters.get("phrase")
     if query is None:
         return None
     print ('QUERY' + query)
