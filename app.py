@@ -74,7 +74,7 @@ def get_answer(title):
     return res
 
 def get_title(data):
-    xmldoc = minidom.parse(data)
+    xmldoc = minidom.parsesString(data)
     url_list = xmldoc.getElementsByTagName('url')
     url = url_list[0]
     #url = re.findall(r'https:(.*?)"', data)
