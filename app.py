@@ -63,10 +63,10 @@ def get_answer(title):
     #action = "action=query&format=json&prop=extracts&list=&titles="
     #wiki_rules = "f&redirects=1&exintro=1&explaintext=1"
 
-    query = urlencode({'titles': title})
+    query = title.strip().replace(" ", "+")
     wiki_query = {'action':'query', 'format': 'json', 'prop': 'extract',
                   'list': '', 'redirects': '1', 'exintro': '1', 'explaintext': '1'}
-    yql_url = baseurl + urlencode(wiki_query) + "&" + query
+    yql_url = baseurl + urlencode(wiki_query) + "&titles=" + query
     print ("ANSWER URL = " + yql_url)
     result = urlopen(yql_url).read().decode("utf8")
     print ("RESULT:\n" + result)
