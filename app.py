@@ -6,6 +6,7 @@ install_aliases()
 
 from urllib.parse import urlparse, urlencode
 from urllib.request import urlopen, Request
+from xml.dom import minidom
 
 
 import json
@@ -53,7 +54,8 @@ def search(req):
     print ("yql_url: " + yql_url)
     result = urlopen(yql_url).read().decode("utf8")
     print ("result: " + result)
-    search_term = get_title(result)
+    data = json.loads(result)
+    search_term = get_title(data)
     print ("search_term = " + search_term)
     return search_term
 
@@ -73,7 +75,10 @@ def get_answer(title):
     return res
 
 def get_title(data):
-    url = re.findall(r'https:(.*?)"', data)
+    xmldoc = minidom.parse(data)
+    url_list = xmldoc.getElementsByTagName('url')
+    url = url_list[0]
+    #url = re.findall(r'https:(.*?)"', data)
     print ('URL ' + url)
     title = url.rsplit('/', 1)[-1]
     print ('title ' + title)
