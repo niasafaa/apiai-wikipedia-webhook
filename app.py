@@ -54,6 +54,7 @@ def search(req):
     result = urlopen(yql_url).read().decode("utf8")
     print ("result: " + result)
     search_term = get_title(result)
+    print ("search_term = " + search_term)
     return search_term
 
 def get_answer(title):
@@ -73,7 +74,9 @@ def get_answer(title):
 
 def get_title(data):
     url = re.findall(r'https:(.*?)"', data)
+    print ('URL ' + url)
     title = url.rsplit('/', 1)[-1]
+    print ('title ' + title)
     return title
 
 def makeYqlQuery(req):
