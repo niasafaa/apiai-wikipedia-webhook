@@ -49,7 +49,7 @@ def search(req):
     query = urlencode({'search': yql_query})
     wiki_query = {'action':'opensearch', 'format': 'json',
                   'namespace': '0', 'limit': '1', 'redirects':'resolve', 'warningsaserror':'1'}
-    yql_url = baseurl + urlencode(wiki_query) + query
+    yql_url = baseurl + urlencode(wiki_query) + "&" + query
     print ("yql_url: " + yql_url)
     result = urlopen(yql_url).read().decode("utf8")
 
@@ -58,12 +58,13 @@ def search(req):
 
 def get_answer(title):
     baseurl = "https://en.wikipedia.org/w/api.php?"
-    action = "action=query&format=json&prop=extracts&list=&titles="
-    wiki_rules = "f&redirects=1&exintro=1&explaintext=1"
-    yql_query = makeYqlQuery(title)
-    if yql_query is None:
-        return {}
-    yql_url = baseurl + action + urlencode(yql_query) + wiki_rules
+    #action = "action=query&format=json&prop=extracts&list=&titles="
+    #wiki_rules = "f&redirects=1&exintro=1&explaintext=1"
+
+    query = urlencode({'titles': title})
+    wiki_query = {'action':'query', 'format': 'json', 'prop': 'extract',
+                  'list': '', 'redirects': '1', 'exintro': '1', 'explaintext': '1'}
+    yql_url = baseurl + urlencode(wiki_query) + "&" + query
     result = urlopen(yql_url).read().decode("utf8")
     print ("RESULT:\n" + result)
     res = makeWebhookResult(result)
