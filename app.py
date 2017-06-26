@@ -65,7 +65,7 @@ def get_answer(title):
     #wiki_rules = "f&redirects=1&exintro=1&explaintext=1"
 
     query = title.strip().replace(" ", "+")
-    wiki_query = {'action':'query', 'format': 'json', 'prop': 'extracts',
+    wiki_query = {'action':'query', 'format': 'xml', 'prop': 'extracts',
                   'list': '', 'redirects': '1', 'exintro': '', 'explaintext': ''}
     yql_url = baseurl + urlencode(wiki_query) + "&titles=" + query
     print ("ANSWER URL = " + yql_url)
@@ -97,17 +97,17 @@ def makeYqlQuery(req):
 
 
 def makeWebhookResult(data):
-    pages_dict = data["query"]["pages"]
-    if pages_dict is None:
-        return {}
-    page_id = next(iter(pages_dict))
-    if page_id is None:
-        return {}
-    extract = data["query"]["pages"][page_id]["extract"]
-    if extract is None:
-        return {}
-
-    print(json.dumps(extract, indent=4))
+    xmldoc = minidom.parseString(data)
+    extract = xmldoc.getElementsByTagName('extract')[0].childNodes[0].data
+    # pages_dict = data["query"]["pages"]
+    # if pages_dict is None:
+    #     return {}
+    # page_id = next(iter(pages_dict))
+    # if page_id is None:
+    #     return {}
+    # extract = data["query"]["pages"][page_id]["extract"]
+    # if extract is None:
+    #     return {}
 
     speech = extract
 
